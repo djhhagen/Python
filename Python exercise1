@@ -1,0 +1,74 @@
+############################Manager Class#############################################################
+class Manager(object):
+
+	def __init__(self, name, dept, staff):
+		self.name = name
+		self.dept = dept
+		self.staff = staff
+
+
+	def direct_allocation(self):
+		allocation = 300
+		for emp,job in self.staff.items():
+			if job =="QA":
+				allocation +=500
+			elif job == "Developer":
+				allocation += 1000
+		manager_dict[self.name] = allocation
+		for emp,job in self.staff.items():
+			if job == "Manager":
+				manager_dict[self.name] = allocation + manager_dict[emp]
+
+		self.dept_allocation()
+
+	def dept_allocation(self):
+		if self.dept in dept_dict:
+			dept_dict[self.dept] += manager_dict[self.name]
+		else:
+			dept_dict[self.dept] = manager_dict[self.name]
+
+#############################################main###########################################
+
+manager_dict = {}
+dept_dict = {}
+
+managera_staff = {'Managerb': 'Manager'}
+managerb_staff = {'developer1': 'Developer', 'QA1': 'QA'}
+
+Managera = Manager("Managera", "dept1", managera_staff)
+Managerb = Manager("Managerb", "dept1", managerb_staff)
+
+Managerb.direct_allocation()
+Managera.direct_allocation()
+
+dan_staff = {'Penny':'Manager','Kayla': 'QA'}
+
+penny_staff = {'bob': 'QA','sue': 'Developer', 'billy': 'QA','john': 'Developer', 'nancy': 'QA' }
+ben_staff = {'Katie' : 'Manager', 'matthew' : 'Developer', 'Diane' : 'QA'}
+katie_staff = {'molly' : 'Developer', 'lucy' : 'QA'} 
+
+
+
+Dan = Manager("Dan", "dept1", dan_staff)
+Ben = Manager("Ben", "dept2", ben_staff)
+Katie = Manager("Katie", 'dept2', katie_staff)
+Penny = Manager("Penny", "dept1", penny_staff)
+
+
+
+Penny.direct_allocation()
+Dan.direct_allocation()
+Katie.direct_allocation()
+Ben.direct_allocation()
+
+
+print "Allocation for Managera is: ",  manager_dict['Managera'] 
+print "Allocation for Managerb is: ",  manager_dict['Managerb']
+
+print "\nAllocation for Dan is: ",  manager_dict['Dan']
+print "Allocation for Penny is: ", manager_dict['Penny']
+print "Allocation for Katie is: ", manager_dict['Katie']
+print "Allocation for Ben is: ", manager_dict['Ben']
+print "Allocation for Dept1 is: ", dept_dict['dept1']
+print "Allocation for Dept2 is: ", dept_dict['dept2']
+
